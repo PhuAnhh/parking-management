@@ -1,5 +1,6 @@
 using Newtonsoft.Json;
 using Application.Extensions;
+using Persistence.Extensions;
 
 namespace Api;
 
@@ -9,8 +10,8 @@ public class Program
     {
         var builder = WebApplication.CreateBuilder(args);
         
-        // builder.Services.AddPersistenceService();
-        // builder.Services.AddApplicationService();
+        builder.Services.AddPersistenceService();
+        builder.Services.AddApplicationService();
 
         builder.Services.AddControllers()
             .AddNewtonsoftJson(options =>
@@ -18,6 +19,7 @@ public class Program
                 options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
                 options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
                 options.SerializerSettings.DateParseHandling = DateParseHandling.None;
+                options.SerializerSettings.Formatting = Formatting.Indented;
             });
 
         var app = builder.Build();
